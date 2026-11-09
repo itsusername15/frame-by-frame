@@ -1,0 +1,10 @@
+"use strict";
+const detail = document.querySelector('#detail');
+const id = new URLSearchParams(window.location.search).get('id');
+function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className=cls;if(text!==undefined)x.textContent=text;return x;}
+function placeholder(m){const x=el('div','poster');const t=el('div','poster-top','FRAME BY FRAME');const a=el('div','poster-art');a.append(el('span','',m.title));x.append(t,a,el('div','poster-bottom','FILM / '+m.year));return x;}
+function showError(message){detail.replaceChildren();const box=el('div','detail-empty');box.append(el('h1','',message));const link=el('a','link-button','← Back to all films');link.href='index.html';box.append(link);detail.append(box);}
+function render(m){document.title=m.title+' | Frame by Frame';detail.replaceChildren();const head=el('div','detail-head');let visual;if(m.poster){visual=el('img','poster');visual.src=m.poster;visual.alt=m.title+' poster';visual.onerror=()=>visual.replaceWith(placeholder(m));}else visual=placeholder(m);
+const intro=el('div');intro.append(el('p','eyebrow','THE FILM DIARY  /  '+m.year),el('h1','',m.title),el('p','detail-genre',m.genre));const score=el('div','detail-score');score.append(el('strong','',String(m.rating)),el('span','',''));score.lastChild.textContent='/ 10  •  MY RATING';intro.append(score,el('p','detail-tagline',m.shortReview || ''));head.append(visual,intro);detail.append(head);
+const sections=el('div','detail-sections');[['Synopsis','synopsis'],['My Thoughts','review'],['Rating Reason','ratingReason']].forEach(([title,key])=>{const section=el('section','detail-section');section.append(el('h2','',title),el('p','',m[key]||'尚未補上內容。'));sections.append(section);});detail.append(sections);}
+if(!id){showError('Film not found');}else fetch('data/movies.json').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(all=>{const movie=all.find(m=>m.id===id);if(movie)render(movie);else showError('Film not found');}).catch(()=>showError('Unable to load film details')); 
