@@ -1,4 +1,4 @@
-# Frame by Frame — Personal Film Journal (2.0)
+# Frame by Frame — Personal Film Journal (2.2)
 
 Frame by Frame 是我個人維護的電影評價網站，記錄自己看過的電影、1～10 分評分、短評、電影大綱與觀影心得。這次 2.0 保留原本的電影日記風格，改善瀏覽和閱讀體驗。
 
@@ -19,6 +19,7 @@ Frame by Frame 是我個人維護的電影評價網站，記錄自己看過的�
 - `js/main.js`：首頁卡片、搜尋、排序、類型篩選
 - `js/movie.js`：詳情內容與前後電影導覽
 - `data/movies.json`：電影資料與個人評價
+- `assets/posters/`：四部電影的本地海報圖片
 - `AGENTS.md`：AI 維護與新增內容的規則
 
 ## 如何新增電影
@@ -35,3 +36,7 @@ Repository： https://github.com/itsusername15/frame-by-frame
 ## 2.0 修改重點
 
 保留所有原有電影的評分和心得，新增動態類型篩選、篩選結果數量，以及詳情頁前後導覽。`AGENTS.md` 也同步補充了新功能的實作規範與測試要求。
+
+## 2.2 海報更新
+
+四部電影的 `poster` 欄位已指向 `assets/posters/` 下的本地 JPEG 圖片；首頁及詳情頁沿用既有的海報顯示邏輯。新增電影時確認圖片檔名、相對路徑與來源授權；圖片無法載入時顯示原有文字佔位圖。為避免 GitHub Pages 用戶端快取舊 CSS 或 JS，首頁與詳情頁的資源引用已更新版本參數。
