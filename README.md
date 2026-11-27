@@ -40,3 +40,9 @@ Repository： https://github.com/itsusername15/frame-by-frame
 ## 2.2 海報更新
 
 四部電影的 `poster` 欄位已指向 `assets/posters/` 下的本地 JPEG 圖片；首頁及詳情頁沿用既有的海報顯示邏輯。新增電影時確認圖片檔名、相對路徑與來源授權；圖片無法載入時顯示原有文字佔位圖。為避免 GitHub Pages 用戶端快取舊 CSS 或 JS，首頁與詳情頁的資源引用已更新版本參數。
+
+
+### Visual update (2.3)
+- Editorial split hero with a featured film using a local poster image.
+- Two-column landscape-style collection cards pairing poster imagery with reviews.
+- Responsive mobile layout, original four reviews, filters, sort and navigation preserved.
