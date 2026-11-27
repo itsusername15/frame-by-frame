@@ -7,4 +7,17 @@ function showError(message){detail.replaceChildren();const box=el('div','detail-
 function render(m){document.title=m.title+' | Frame by Frame';detail.replaceChildren();const head=el('div','detail-head');let visual;if(m.poster){visual=el('img','poster');visual.src=m.poster;visual.alt=m.title+' poster';visual.onerror=()=>visual.replaceWith(placeholder(m));}else visual=placeholder(m);
 const intro=el('div');intro.append(el('p','eyebrow','THE FILM DIARY  /  '+m.year),el('h1','',m.title),el('p','detail-genre',m.genre));const score=el('div','detail-score');score.append(el('strong','',String(m.rating)),el('span','',''));score.lastChild.textContent='/ 10  •  MY RATING';intro.append(score,el('p','detail-tagline',m.shortReview || ''));head.append(visual,intro);detail.append(head);
 const sections=el('div','detail-sections');[['Synopsis','synopsis'],['My Thoughts','review'],['Rating Reason','ratingReason']].forEach(([title,key])=>{const section=el('section','detail-section');section.append(el('h2','',title),el('p','',m[key]||'尚未補上內容。'));sections.append(section);});detail.append(sections);}
-if(!id){showError('Film not found');}else fetch('data/movies.json').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(all=>{const movie=all.find(m=>m.id===id);if(movie)render(movie);else showError('Film not found');}).catch(()=>showError('Unable to load film details')); 
+function addFilmNavigation(all, movie) {
+  const index = all.findIndex(item => item.id === movie.id);
+  if (index < 0 || all.length < 2) return;
+  const navigation = el('nav','film-navigation'); navigation.setAttribute('aria-label','其他電影評價');
+  const previous = all[(index - 1 + all.length) % all.length];
+  const next = all[(index + 1) % all.length];
+  [[previous,'← PREVIOUS FILM','previous'],[next,'NEXT FILM →','next']].forEach(([item,label,direction])=>{
+    const link = el('a','film-nav-link '+direction); link.href='movie.html?id='+encodeURIComponent(item.id);
+    link.append(el('span','film-nav-label',label),el('strong','',item.title),el('span','film-nav-meta',item.year+'  ·  '+item.rating+'/10'));
+    navigation.append(link);
+  });
+  detail.append(navigation);
+}
+if(!id){showError('Film not found');}else fetch('data/movies.json').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(all=>{const movie=all.find(m=>m.id===id);if(movie){render(movie);addFilmNavigation(all,movie);}else showError('Film not found');}).catch(()=>showError('Unable to load film details')); 
