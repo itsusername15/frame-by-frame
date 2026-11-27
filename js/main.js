@@ -45,4 +45,4 @@ function buildGenreFilters() {
   }));
 }
 search.addEventListener('input',render); sort.addEventListener('change',render);
-fetch('data/movies.json').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(data => {if(!Array.isArray(data))throw new Error('Data format'); movies=data; document.querySelector('#total-count').textContent=String(movies.length).padStart(2,'0')+' FILMS IN THE COLLECTION';buildGenreFilters();render();}).catch(()=>{status.textContent='無法載入電影資料。請用本機伺服器或 GitHub Pages 開啟網站。';});
+fetch('data/movies.json?v=2.4').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(data => {if(!Array.isArray(data))throw new Error('Data format'); movies=data; document.querySelector('#total-count').textContent=String(movies.length).padStart(2,'0')+' FILMS IN THE COLLECTION';buildGenreFilters();render();}).catch(()=>{status.textContent='無法載入電影資料。請用本機伺服器或 GitHub Pages 開啟網站。';});

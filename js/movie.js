@@ -20,4 +20,4 @@ function addFilmNavigation(all, movie) {
   });
   detail.append(navigation);
 }
-if(!id){showError('Film not found');}else fetch('data/movies.json').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(all=>{const movie=all.find(m=>m.id===id);if(movie){render(movie);addFilmNavigation(all,movie);}else showError('Film not found');}).catch(()=>showError('Unable to load film details')); 
+if(!id){showError('Film not found');}else fetch('data/movies.json?v=2.4').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(all=>{const movie=all.find(m=>m.id===id);if(movie){render(movie);addFilmNavigation(all,movie);}else showError('Film not found');}).catch(()=>showError('Unable to load film details')); 
